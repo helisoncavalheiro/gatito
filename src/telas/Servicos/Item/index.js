@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Botao from "../../../components/Botao";
 import CampoInteiro from "../../../components/CampoInteiro";
 import estilos from "./estilos";
@@ -7,6 +7,7 @@ import estilos from "./estilos";
 export default function Item({ nome, preco, descricao }) {
   const [quantidade, setQuantidade] = useState(1);
   const [total, setTotal] = useState(preco);
+  const [expandir, setExpandir] = useState(false);
 
   const atualizaQuantidade = (novaQuantidade) => {
     setQuantidade(novaQuantidade);
@@ -17,9 +18,14 @@ export default function Item({ nome, preco, descricao }) {
     setTotal(quantidade * preco);
   };
 
+  const toggleExpandir = () => {
+    setExpandir(!expandir);
+    atualizaQuantidade(1);
+  };
+
   return (
     <>
-      <View style={estilos.informacao}>
+      <TouchableOpacity style={estilos.informacao} onPress={toggleExpandir}>
         <Text style={estilos.nome}>{nome}</Text>
         <Text style={estilos.descricao}>{descricao}</Text>
         <Text style={estilos.preco}>
@@ -28,30 +34,33 @@ export default function Item({ nome, preco, descricao }) {
             currency: "BRL",
           }).format(preco)}
         </Text>
-      </View>
-      <View style={estilos.carrinho}>
-        <View>
-          <View style={estilos.valor}>
-            <Text style={estilos.descricao}>Quantidade: </Text>
-            <CampoInteiro
-              valor={quantidade}
-              acao={atualizaQuantidade}
-              estilos={estilos.quantidade}
-            />
+      </TouchableOpacity>
+      {expandir && (
+        <View style={estilos.carrinho}>
+          <View>
+            <View style={estilos.valor}>
+              <Text style={estilos.descricao}>Quantidade: </Text>
+              <CampoInteiro
+                valor={quantidade}
+                acao={atualizaQuantidade}
+                estilos={estilos.quantidade}
+              />
+            </View>
+            <View style={estilos.valor}>
+              <Text style={estilos.descricao}>Total: </Text>
+              <Text style={estilos.preco}>
+                {Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(total)}
+              </Text>
+            </View>
           </View>
-          <View style={estilos.valor}>
-            <Text style={estilos.descricao}>Total: </Text>
-            <Text style={estilos.preco}>
-              {Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(total)}
-            </Text>
-          </View>
+          {/* <Button title="Adicionar"></Button> */}
+          <Botao valor="Adicionar" />
         </View>
-        {/* <Button title="Adicionar"></Button> */}
-        <Botao valor="Adicionar" />
-      </View>
+      )}
+
       <View style={estilos.divisor} />
     </>
   );
