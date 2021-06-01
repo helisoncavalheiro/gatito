@@ -1,7 +1,7 @@
 import React from "react";
 
 //para usar os componentes do React Native eles precisam ser importados primeiro
-import { Text, SafeAreaView, StatusBar, FlatList } from "react-native";
+import { SafeAreaView, StatusBar, FlatList } from "react-native";
 
 import Item from "./Item";
 const servicos = [
@@ -30,7 +30,6 @@ export default function Servicos() {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Text>Serviços</Text>
       <FlatList
         data={servicos}
         renderItem={({ item }) => <Item {...item} />}

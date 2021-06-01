@@ -6,6 +6,16 @@ import estilos from "./estilos";
 
 export default function Item({ nome, preco, descricao }) {
   const [quantidade, setQuantidade] = useState(1);
+  const [total, setTotal] = useState(preco);
+
+  const atualizaQuantidade = (novaQuantidade) => {
+    setQuantidade(novaQuantidade);
+    calculaTotal(novaQuantidade);
+  };
+
+  const calculaTotal = (quantidade) => {
+    setTotal(quantidade * preco);
+  };
 
   return (
     <>
@@ -25,13 +35,18 @@ export default function Item({ nome, preco, descricao }) {
             <Text style={estilos.descricao}>Quantidade: </Text>
             <CampoInteiro
               valor={quantidade}
-              acao={setQuantidade}
+              acao={atualizaQuantidade}
               estilos={estilos.quantidade}
             />
           </View>
           <View style={estilos.valor}>
-            <Text style={estilos.descricao}>Preço: </Text>
-            <Text style={estilos.preco}>0</Text>
+            <Text style={estilos.descricao}>Total: </Text>
+            <Text style={estilos.preco}>
+              {Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(total)}
+            </Text>
           </View>
         </View>
         {/* <Button title="Adicionar"></Button> */}
