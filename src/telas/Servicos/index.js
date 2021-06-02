@@ -29,11 +29,9 @@ const servicos = [
 
 export default function Servicos() {
   return (
-    <TelaPadrao>
       <FlatList
         data={servicos}
         renderItem={({ item }) => <Item {...item} />}
         keyExtractor={({ id }) => String(id)}></FlatList>
-    </TelaPadrao>
   );
 }

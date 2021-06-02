@@ -42,12 +42,12 @@ export default function Carrinho() {
   //const [total, setTotal] = useState();
   const total = servicos.reduce((soma, {preco, quantidade})=> soma + (preco * quantidade), 0);
   return (
-    <TelaPadrao>
+    <>
       <StatusCarrinho total={total} />
       <FlatList
         data={servicos}
         renderItem={({ item }) => <Item {...item} />}
         keyExtractor={({ id }) => String(id)}></FlatList>
-    </TelaPadrao>
+    </>
   );
 }
