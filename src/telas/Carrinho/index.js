@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import estilosGlobal from "../../estilos";
 
 //para usar os componentes do React Native eles precisam ser importados primeiro
@@ -12,6 +12,7 @@ import {
 
 import Item from "./Item";
 import TelaPadrao from "../../components/TelaPadrao";
+import StatusCarrinho from "../../components/StatusCarrinho";
 const servicos = [
   {
     id: 1,
@@ -38,8 +39,11 @@ const servicos = [
 ];
 
 export default function Carrinho() {
+  //const [total, setTotal] = useState();
+  const total = servicos.reduce((soma, {preco, quantidade})=> soma + (preco * quantidade), 0);
   return (
     <TelaPadrao>
+      <StatusCarrinho total={total} />
       <FlatList
         data={servicos}
         renderItem={({ item }) => <Item {...item} />}
