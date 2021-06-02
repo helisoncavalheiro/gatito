@@ -1,16 +1,10 @@
 import React from "react";
-import estilosGlobal from "../../estilos";
 
 //para usar os componentes do React Native eles precisam ser importados primeiro
-import {
-  SafeAreaView,
-  StatusBar,
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { FlatList } from "react-native";
 
 import Item from "./Item";
+import TelaPadrao from "../../components/TelaPadrao";
 const servicos = [
   {
     id: 1,
@@ -35,16 +29,11 @@ const servicos = [
 
 export default function Servicos() {
   return (
-    <SafeAreaView style={estilosGlobal.preencher}>
-      <StatusBar />
-      <KeyboardAvoidingView
-        style={estilosGlobal.preencher}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}>
-        <FlatList
-          data={servicos}
-          renderItem={({ item }) => <Item {...item} />}
-          keyExtractor={({ id }) => String(id)}></FlatList>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <TelaPadrao>
+      <FlatList
+        data={servicos}
+        renderItem={({ item }) => <Item {...item} />}
+        keyExtractor={({ id }) => String(id)}></FlatList>
+    </TelaPadrao>
   );
 }
